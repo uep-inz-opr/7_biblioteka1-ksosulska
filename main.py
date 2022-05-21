@@ -4,10 +4,15 @@ class Biblioteka:
         self.tytul = tytul
         self.autor = autor
         self.rok = rok
+        self.ilosc = 0
 
  def dodaj_ksiazke(self, tytul, autor, rok):
    ksiazki = []
    ksiazki.append({"autor": autor, "tytuł": tytul, "rok": rok})
+
+ def __repr__(self):
+        return "'" + self.autor + "', " + str(self.ilosc)
+
 
 biblio = {}
 n = int(input())
