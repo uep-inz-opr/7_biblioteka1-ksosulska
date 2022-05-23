@@ -1,29 +1,54 @@
 class Biblioteka:
+  def __init__(self):
+    self.limit_wypozyczen = 3
+    self.egzemplarze =[]
+    self.ksiazki = []
 
- def __init__ (self, tytul, autor, rok):
-        self.tytul = tytul
-        self.autor = autor
-        self.rok = rok
-        self.ilosc = 0
+  def dodaj(self, tytul, autor, rok_wydania):
+    ksiazka = Ksiazka(tytul, autor)
+    egzemplarz = Egzemplarz(ksiazka, rok_wydania)
 
- def dodaj_ksiazke(self, tytul, autor, rok):
-   ksiazki = []
-   ksiazki.append({"autor": autor, "tytuł": tytul, "rok": rok})
+    self.egzemplarze.append(egzemplarz)
 
- def __repr__(self):
-        return "'" + self.autor + "', " + str(self.ilosc)
+    for k in self.ksiazki:
+      if k.tytul == tytul and k.autor ==autor:
+        k.liczba += 1
+        return
+  
+    
+    self.ksiazki.append(ksiazka)
 
+    
 
-biblio = {}
+  class Ksiazka:
+    def __init__(self, tytul, autor):
+      self.tytul = tytul
+      self.autor = autor
+      self.liczba = 1 
+
+    def __repr__(self):
+      return repr((self.tytul, self.autor,self.liczba))
+
+  class Egzemplarz:
+    def __init__(self, ksiazka, rok_wydania):
+      self.ksiazka = ksiazka
+      self.rok_wydania = rok_wydania
+      self.wypozyczony = False
+
+    def __repr__(self):
+      return repr((self.ksiazka.tytul, self.ksiazka.autor, self.rok_wydania))
+
+b = Biblioteka()
 n = int(input())
-for i in range(n):
-    ks = eval(input())
-    tytul = ks[0]
-    autor = ks[1]
-    rok = ks[2]
-    if tytul in biblio:
-        biblio[tytul].ilosc += 1
-    else:
-        biblio[tytul] = Biblioteka(tytul, autor, rok)
 
-print(biblio)
+for i in range(0, n):
+    k=eval(input())
+    b.dodaj(k[0], k[1], k[2])
+
+b.ksiazki.sort(key=lambda x: x.tytul)
+
+for ksiazka in b.ksiazki:
+  print(ksiazka)
+
+
+print(b.egzemplarze)
